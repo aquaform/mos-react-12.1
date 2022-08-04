@@ -8,7 +8,7 @@ export default function Shop() {
   const [items, setItems] = useState([]);
   const { get, loader } = useFetch()
 
-  const memoizedGet = useCallback(get, [])
+  const memoizedGet = useCallback(get, [get])
 
     useEffect(()=>{
       memoizedGet(' https://covid-shop-mcs.herokuapp.com')
