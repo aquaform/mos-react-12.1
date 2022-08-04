@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useCallback, useEffect} from "react";
 import Item from "./Item.js";
 import "./index.css";
 import useFetch from "./useFetch";
@@ -8,11 +8,15 @@ export default function Shop() {
   const [items, setItems] = useState([]);
   const { get, loader } = useFetch()
 
-  useEffect(()=> {
-    get(' https://covid-shop-mcs.herokuapp.com')
-        .then(data => setItems(data))
-        .catch(err => console.error(err))
-  }, [])
+  const memoizedGet = useCallback(get, [])
+
+    useEffect(()=>{
+      memoizedGet(' https://covid-shop-mcs.herokuapp.com')
+            .then(data => setItems(data))
+            .catch(err => console.error(err))
+    }, [memoizedGet])
+
+
 
   return (
     <div className="shop">
